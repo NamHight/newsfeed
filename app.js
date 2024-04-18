@@ -10,6 +10,8 @@ const expressLayout = require('express-ejs-layouts');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const port = 8099
+
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 // view engine setup
@@ -42,8 +44,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(8099, ()=>{
-  console.log(`server running is port  3000 `)
+app.listen(port, ()=>{
+  console.log(`server running is port ${port}`)
 })
 
 module.exports = app;
