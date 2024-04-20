@@ -1,17 +1,3 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var moment = require('moment');
-var multer = require('multer');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var expressLayout = require('express-ejs-layouts');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var port = 8099;
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
