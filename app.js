@@ -1,19 +1,22 @@
 const createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var moment = require('moment');
-var multer = require('multer');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const moment = require('moment');
+const multer = require('multer');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const cors = require("cors");
 
 const port = 8099
-
-var app = express();
+dotenv.config();
+const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
+
 // view engine setup
 app.use(expressLayout);
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +25,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
+app.use(cors());
+app.options("*", cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
