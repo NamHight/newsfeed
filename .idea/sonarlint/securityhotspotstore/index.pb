@@ -58,3 +58,7 @@ w
 G.idea/sonarlint/issuestore/3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a,1\5\15ab6acc17bd4f2d048dc50beb0dfeb0086a0c18
 
 Q.idea/sonarlint/securityhotspotstore/3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a,4\e\4ead0a9bb92d8636c4ad5a0ef56838d8b7bd33d6
+>
+routes/News.js,9\f\9f1db9d327a6dbc169aaa83be3b520ccae7a776f
+@
+views/layout.ejs,e\9\e92abd0d5bce073005703f6be9c7fbcb1d720c5a
