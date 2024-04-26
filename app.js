@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // view engine setup
 app.use(expressLayout);
 app.set('views', path.join(__dirname, 'views'));
+app.set('layout','user/layout');
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
@@ -44,7 +45,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('user/error');
 });
 
 app.listen(port, ()=>{
