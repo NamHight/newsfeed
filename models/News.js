@@ -10,8 +10,9 @@ class News{
         if (!Object.keys(params).length) {
             return await query(sql);
         }
-        const { columnSet, values } = multipleColumnSet(params);
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
         sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
         console.log("sql: " + [columnSet] + [values]);
         return await query(sql, [...values]);
     }
@@ -27,16 +28,31 @@ class News{
         // Hàm này trả ve news dau tien
         return result[0];
     }
+    findOneTitle = async (params) => {
+        const { columnSet, values } = multipleColumnSet(params)
 
+        const sql = `SELECT title FROM ${this.tableName}
+        WHERE ${columnSet}`;
+
+        const result = await query(sql, [...values],()=>{
+            
+        });
+
+        // Hàm này trả ve news dau tien
+        return result[0];
+
+    }
     //data la doi tuong can truyen tham so mapping qua database
-    create = async ({ data }) => {
+    create = async (data ) => {
         // day la vi du
         const sql = `INSERT INTO ${this.tableName}
-        (username, password, first_name, last_name, email, role, age) VALUES (?,?,?,?,?,?,?)`;
-
-        const result = await query(sql, [username, password, first_name, last_name, email, role, age]);
+        (title, description, author, view, ID_DM, createAt, status) VALUES (?,?,?,?,?,?,?)`;
+        if(data === undefined){
+            console.log("chua co du lieu");
+        }
+        const result = await query(sql, [data.title,data.description,data.author,data.view,data.id_dm,data.createAt,data.status]);
         const affectedRows = result ? result.affectedRows : 0;
-
+        console.log("show ket qua",affectedRows)
         return affectedRows;
     }
 
