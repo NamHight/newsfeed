@@ -10,6 +10,7 @@ const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
 const cors = require("cors");
 
 const port = 8099
