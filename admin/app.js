@@ -9,10 +9,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const newsRouter = require('./routes/News');
+const catetoryRouter = require('./routes/DMNews');
+const contactRouter = require('./routes/Contacts');
+const imageRouter = require('./routes/image');
 const cors = require("cors");
 
-const port = 8099
+const port = 3000
 dotenv.config();
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,7 +32,10 @@ app.use(cors());
 app.options("*", cors());
 
 app.use('/', indexRouter);
-
+app.use('/news', indexRouter);
+app.use('/catetory', indexRouter);
+app.use('/comment', indexRouter);
+app.use('/contact', indexRouter);
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
