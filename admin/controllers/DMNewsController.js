@@ -1,5 +1,5 @@
 
-const IndexModel = require('../models/index.js');
+const DMNewsModel = require('../models/DMNews');
 
 class DMNewsController {
  

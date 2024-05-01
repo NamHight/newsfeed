@@ -28,16 +28,17 @@ class News{
         // Hàm này trả ve news dau tien
         return result[0];
     }
-    findOneTitle = async (params) => {
+    findOneField = async (params) => {
+        console.log('vao day')
+        // params cần chuyền vô 1 là đối tượng gồm key và values ví dụ Id: 6
         const { columnSet, values } = multipleColumnSet(params)
-
-        const sql = `SELECT title FROM ${this.tableName}
+        // Tách ra được columnSet = 'Id=?' và values = 6
+        const sql = `SELECT Status FROM ${this.tableName}
         WHERE ${columnSet}`;
-
+        // Lúc này câu lệnh truy vấn là: select Status from baiviet where Id=?
         const result = await query(sql, [...values],()=>{
             
         });
-
         // Hàm này trả ve news dau tien
         return result[0];
 

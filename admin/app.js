@@ -10,9 +10,10 @@ const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
 const indexRouter = require('./routes/index');
 const newsRouter = require('./routes/News');
-const catetoryRouter = require('./routes/DMNews');
-const contactRouter = require('./routes/Contacts');
-const imageRouter = require('./routes/image');
+// const catetoryRouter = require('./routes/DMNews');
+// const contactRouter = require('./routes/Contacts');
+// const imageRouter = require('./routes/image');
+// const commentRouter = require('./routes/Comments');
 const cors = require("cors");
 
 const port = 3000
@@ -32,10 +33,11 @@ app.use(cors());
 app.options("*", cors());
 
 app.use('/', indexRouter);
-app.use('/news', indexRouter);
-app.use('/catetory', indexRouter);
-app.use('/comment', indexRouter);
-app.use('/contact', indexRouter);
+app.use('/news', newsRouter);
+// app.use('/catetory', catetoryRouter);
+// app.use('/comment', commentRouter);
+// app.use('/contact', contactRouter);
+// app.use('/image', imageRouter);
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

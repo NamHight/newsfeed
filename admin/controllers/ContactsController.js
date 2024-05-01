@@ -1,5 +1,5 @@
 
-const IndexModel = require('../models/index.js');
+const ContactModel = require('../models/Contacts');
 
 class ContactController {
 
