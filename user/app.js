@@ -8,14 +8,9 @@ const multer = require('multer');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
-<<<<<<< HEAD:app.js
-const user = require('./routes/user/Index');
-const userNews = require('./routes/user/News');
-=======
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
->>>>>>> eb1996ac90234c28a41f87533ad58a8d1c3b05b3:user/app.js
 const cors = require("cors");
 
 const port = 8099
