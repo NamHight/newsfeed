@@ -1,0 +1,101 @@
+﻿
+<div class="content">
+            <!-- Start container-fluid -->
+            <div class="container-fluid">
+                <!-- start  -->
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <h4 class="header-title mb-3">User managements</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div>
+                            <a href="/createuser" class="btn btn-info py-2 px-3 text-dark">Create User</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <% if(datas) {%>
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap table-sm"
+                                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>UserName</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Mail</th>
+                                        <th>Image</th>
+                                        <th>Description</th>
+                                        <th>Role</th>
+                                        <th>CreateAt</th>
+                                        <th>UpdateAt</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <%datas.forEach((item) =>{  %>
+                                        <tr>
+                                            <td><%= item.Id %></td>
+                                            <td><%= item.Username %></td>
+                                            <td><%= item.Name %></td>
+                                            <td><%= item.Tel %></td>
+                                            <td><%= item.Mail %></td>
+                                            <td><img src="images/<%= item.Image %>" alt="<%= item.Image %>" class="w-100 h-25"></td>
+                                            <td><%= item.Description %></td>
+                                            <td><% if(item.Role === 0) { %>
+                                                    <p class="text-primary font-weight-bold">User</p>
+                                                <%}else{%>
+                                                    <p class="text-danger font-weight-bold">Admin</p>
+                                                <%}%>
+                                            </td>
+                                            <td><%= dated(item.CreateAt) %></td>
+                                            <td><% if(item.UpdateAt) {%>
+                                                    <%= dated(item.UpdateAt)%>
+                                                <%}else {%>
+                                                    <p></p>
+                                                <%}%>
+                                            </td>
+                                            <td><% if(item.Status === 1) { %>
+                                                    <a class="text-center bg-success py-1 px-2 font-weight-bold text-white point-e" href="/users/">Active</a>
+                                                <% }else{%>
+                                                    <p class="text-center bg-danger py-1 px-2 font-weight-bold text-white">Block</p>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" href="/edituser?id=<%= item.Id%>"><i class="ti-pencil"></i></a>
+                                                <form action="/deleteuser" method="post" class="mt-1">
+                                                    <input type="hidden" name="id" value="<%= item.Id%>">
+                                                    <button class="btn btn-danger" href="/users/<%= item.Id%>" type="submit"  onclick="return confirmDelete()"><i class="ti-eraser"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                    </tbody>
+                                </table>
+                            <%} else {%>
+                                <div>
+                                    <p>Khong co du lieu</p>
+                                </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+            </div>
+            <!-- end container-fluid -->
+    </div>
+
+<script>
+    function confirmDelete() {
+        return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');
+    }
+</script>

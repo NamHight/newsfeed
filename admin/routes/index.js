@@ -5,5 +5,5 @@ const UserController = require('../controllers/userController')
 /* GET home page. */
 
 router.get('/',IndexController.index);
-router.get('/users',UserController.index)
+
 module.exports = router;

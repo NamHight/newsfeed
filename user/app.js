@@ -10,7 +10,7 @@ const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
+const contactRouter = require('./routes/contact');
 const cors = require("cors");
 
 const port = 8099
@@ -21,17 +21,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 // view engine setup
 app.use(expressLayout);
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout','user/layout');
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(cors());
 app.options("*", cors());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(indexRouter);
+app.use(usersRouter);
+app.use(contactRouter);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,7 +48,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('user/error');
+  res.render('error');
 });
 
 app.listen(port, ()=>{
