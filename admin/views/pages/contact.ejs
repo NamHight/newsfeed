@@ -1,0 +1,78 @@
+
+<div class="content">
+    <!-- Start container-fluid -->
+    <div class="container-fluid">
+        <!-- start  -->
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <h4 class="header-title mb-3">Contact managements</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <% if(datas) {%>
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap table-sm"
+                           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Mail</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>CreateAt</th>
+                            <th>UpdateAt</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%datas.forEach((item) =>{  %>
+                            <tr>
+                                <td><%= item.Id %></td>
+                                <td><%= item.Name %></td>
+                                <td><%= item.Tel %></td>
+                                <td><%= item.Email %></td>
+                                <td><%= item.Title %>></td>
+                                <td><%= item.Content %></td>
+                                <td><%= dated(item.CreateAt) %></td>
+                                <td><% if(item.UpdateAt) {%>
+                                        <%= dated(item.UpdateAt)%>
+                                    <%}else {%>
+                                        <p></p>
+                                    <%}%>
+                                </td>
+                                <td><% if(item.Status === 1) { %>
+                                        <a class="text-center bg-success py-1 px-2 font-weight-bold text-white point-e" href="/users/">Active</a>
+                                    <% }else{%>
+                                        <p class="text-center bg-warning py-1 px-2 font-weight-bold text-white">Pending</p>
+                                    <%}%>
+                                </td>
+                                <td>
+                                    <form action="/activecontact" method="post" class="mt-1">
+                                        <input type="hidden" name="id" value="<%= item.Id%>">
+                                        <button class="btn btn-primary" type="submit"><i class="ti-pencil"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                        </tbody>
+                    </table>
+                    <%} else {%>
+                        <div>
+                            <p>Khong co du lieu</p>
+                        </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div>
+    <!-- end container-fluid -->
+</div>

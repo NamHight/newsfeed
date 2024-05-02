@@ -1,0 +1,109 @@
+
+<div class="mt-5">
+    <div class="d-inline-block mb-4 mx-3">
+        <a class="bg-white rounded text-black mr-3" href="/users"><i class="text-black ti-back-right font-20 "></i></a>
+        <h2 class="d-inline">Edit User <%= datas.Name%></h2>
+    </div>
+    <form method="post" action="/edituser" enctype="multipart/form-data" class="mx-3">
+        <input type="hidden" value="<%= datas.Id %>" id="id" name="id">
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label font-20">Username</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="username" name="username" value="<%= datas.Username%>">
+                <%if (errors && errors.username) {%>
+                    <span class="text-danger"><%= errors.username.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label font-20">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label font-20">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" value="<%= datas.Name %>">
+                <%if (errors && errors.name) {%>
+                    <span class="text-danger"><%= errors.name.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="phone" class="col-sm-2 col-form-label font-20">Phone</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="phone" name="phone" value="<%= datas.Tel%>">
+                <%if (errors && errors.phone) {%>
+                    <span class="text-danger"><%= errors.phone.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Email" class="col-sm-2 col-form-label font-20">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" name="email" value="<%= datas.Mail%>">
+                <%if (errors && errors.email) {%>
+                    <span class="text-danger"><%= errors.email.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label font-20">Description</label>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" id="description" name="description" data-min="10" ><%= datas.Description %></textarea>
+                <%if (errors && errors.description) {%>
+                    <span class="text-danger"><%= errors.description.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label font-20">Role</label>
+            <div class="col-sm-10">
+                <select name="role" id="role">
+                    <option value="0" <% if (datas.Role === 0) { %>selected<% } %>>User</option>
+                    <option value="1" <% if (datas.Role === 1) { %>selected<% } %>>Admin</option>
+                </select>
+                <%if (errors && errors.role) {%>
+                    <span class="text-danger"><%= errors.role.msg %></span>
+                <%}%>
+            </div>
+        </div>
+        <div class="form-group row d-flex">
+            <label for="image" class="col-sm-2 col-form-label font-20">Image</label>
+            <div class="col-sm-5">
+                <input type="file" id="image" name="image" value="<%= datas.Image %>" onchange="displayImage()">
+                <input type="hidden" name="currentImage" value="<%= datas.Image %>">
+                <%if (errors && errors.image) {%>
+                    <span class="text-danger"><%= errors.image.msg %></span>
+                <%}%>
+            </div>
+            <div class="col-sm-3 w-50">
+                <img src="images/<%= datas.Image %>" alt="Selected Image" id="selectedImage"  class="mw-100 mh-100">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function displayImage() {
+        const input = document.getElementById('image');
+        const img = document.getElementById('selectedImage');
+
+        // Check if a file is selected
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            // Set up the FileReader to read the selected image
+            reader.onload = function(e) {
+                img.src = e.target.result; // Set the image source to the base64 encoded image data
+            };
+            // Read the selected image as a data URL
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

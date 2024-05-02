@@ -8,9 +8,9 @@ class NewsController {
     news = async (req,res) =>{
         let result = await News.findOneTitle({id:8});
         console.log("show result", result);
-        // if (!result.length) {
-        //     throw new HttpException(404, 'news not found');
-        // }
+        if (!result.length) {
+            throw new HttpException(404, 'news not found');
+        }
         console.log("show date ",convertDate(new Date()));
         let dated = convertDate(new Date())
         let data = {
