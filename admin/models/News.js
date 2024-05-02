@@ -6,7 +6,7 @@ class News{
     tableName = 'baiviet';
 
     find = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableName}`;
+        let sql = `SELECT * FROM ${this.tableName} limit(11)`;
         if (!Object.keys(params).length) {
             return await query(sql);
         }

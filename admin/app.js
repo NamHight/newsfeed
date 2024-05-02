@@ -23,6 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // view engine setup
 app.use(expressLayout);
+app.set("layout extractScripts", true)
+app.set("layout extractStyles", true)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
@@ -33,7 +35,7 @@ app.use(cors());
 app.options("*", cors());
 
 app.use('/', indexRouter);
-app.use('/news', newsRouter);
+app.use('/', newsRouter);
 // app.use('/catetory', catetoryRouter);
 // app.use('/comment', commentRouter);
 // app.use('/contact', contactRouter);

@@ -1,6 +1,4 @@
 
-<% layout 'layout' %>
-
 <div class="text-center text-dark h5" style="border-radius: 30%;"> <span class="bg-info"><%= title %></span></div>
 
 <div class="mt-5 container">
@@ -23,7 +21,8 @@
         <tbody>
             <%#var x= 0;%>
             <% posts.forEach( (element, x=0 )=> { %>
-                <%if(x==10) {return;}%>
+              
+                <%if(x>=10) {%>
                 <%# trong foreach không thể dùng for in, break mà phải dùng return để dừng foreach%>
                 <tr>
                     <td><%=element.Id%></td>
@@ -40,10 +39,20 @@
                         <td><a href="news/active/<%=element.Id%>">No Active</a></td>
                     <%}%>
                     <td>
-                        <a href="update?id=<%= element.Id %>">Update</a>
+                        <form action="news/update/<%=element.Id%>">
+                            <input type="text" name="<%=element.Id%>" hidden>
+                            <button class="btn-group btn-info" type="submit">Update</button>
+                        </form>
                     </td>
-                    <td><a href="news/delete/<%=element.Id%>">Delete</a></td>
+                    <td>
+                        <a href="news/delete/<%=element.Id%>">Delete</a>
+                        <form action="news/update/<%=element.Id%>">
+                            <input type="text" name="<%=element.Id%>" hidden>
+                            <button class="btn-group btn-info" type="submit">Update</button>
+                        </form>
+                    </td>
                 </tr>
+                <%}%>
                 <% x = x+1 %>
                 <%# sau mỗi vòng lặp sẽ tăng biến x lên 1 đơn vị, đến 10 thì thoát vòng lặp%>
             <% });  %>
@@ -62,12 +71,12 @@
                         <li class="paginate_button page-item previous disabled" id="datatable_previous">
                             <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="" class="page-link">Previous</a>
                         </li>
-                        <li class="paginate_button page-item active">
+                        <li class="paginate_button page-item ">
                             <a href="news/" aria-controls="datatable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
                         </li>
                         <%var i=2; %>
                         <% for (; i<=sotrang; i++) {%>
-                            <li class="paginate_button page-item ">
+                            <li class="paginate_button page-item active ">
                                 <a href="news/page/<%=i%>" aria-controls="datatable" data-dt-idx="<%=i%>" tabindex="" class="page-link"><%=i%></a>
                             </li>
                         <%}%>
@@ -80,4 +89,3 @@
         </div>
     </div>
 </div>
-
