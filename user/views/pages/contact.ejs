@@ -1,0 +1,78 @@
+<%- include('../partials/header.ejs'); %>
+
+<%- include('../partials/navbar.ejs'); %>
+
+<div class="container contact ">
+    <% if (typeof successMessage !== 'undefined' && successMessage !== '') { %>
+        <div class="alert alert-success" role="alert">
+            <%= successMessage %>
+        </div>
+    <% } %>
+    <div class="row">
+        <div class="col-md-3 mt-3">
+            <div class="contact-info">
+                <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
+                <h2>Contact Us</h2>
+                <h4>We would love to hear from you !</h4>
+            </div>
+        </div>
+        <div class="col-md-9 mt-3">
+            <form class="contact-form" method="post" action="/contact">
+                <div class="form-group mb-2">
+                    <label class="control-label col-sm-2" for="title">Title:</label>
+                    <div class="col-sm-10 mb-2">
+                        <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title">
+                        <%if (errors && errors.title) {%>
+                            <span class="text-danger"><%= errors.title.msg %></span>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="control-label col-sm-2" for="name">Name:</label>
+                    <div class="col-sm-10 mb-2">
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                        <%if (errors && errors.name) {%>
+                            <span class="text-danger"><%= errors.name.msg %></span>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="control-label col-sm-2" for="email">Email:</label>
+                    <div class="col-sm-10 mb-2 ">
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        <%if (errors && errors.email) {%>
+                            <span class="text-danger"><%= errors.email.msg %></span>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="control-label col-sm-2" for="phone">Phone:</label>
+                    <div class="col-sm-10  mb-2">
+                        <input type="number" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+                        <%if (errors && errors.phone) {%>
+                            <span class="text-danger"><%= errors.phone.msg %></span>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="control-label col-sm-2" for="content">Content:</label>
+                    <div class="col-sm-10  mb-2">
+                        <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+                        <%if (errors && errors.content) {%>
+                            <span class="text-danger"><%= errors.content.msg %></span>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer.ejs') %>
