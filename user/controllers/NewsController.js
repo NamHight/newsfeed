@@ -18,7 +18,11 @@ class NewsController {
         }
         res.render('index', { title: 'News Feeds' ,result:result, converDate:dated});
     }
-
+    latestNews = async (req,res) =>{
+        let result1 = await News.selectTitle();
+        
+        res.render('pages/index', { latestNew:result1});
+    }
 
 }
 

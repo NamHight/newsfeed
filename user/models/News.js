@@ -42,6 +42,17 @@ class News{
         return result[0];
 
     }
+    selectTitle = async (params = {}) => {
+        let sql = `SELECT Title FROM ${this.tableName}`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
+    }
     //data la doi tuong can truyen tham so mapping qua database
     create = async (data ) => {
         // day la vi du

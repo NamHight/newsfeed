@@ -5,9 +5,15 @@
                 <div class="header_top_left">
                     <ul class="top_nav">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/">About</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/">Danh Sách Bài Viết</a></li>
+                        <li><a href="/contact">Liên Hệ</a></li>
                     </ul>
+                </div>
+                <div class="header_top_center">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                 </div>
                 <div class="header_top_right">
                     <div class="header-modal">
@@ -15,8 +21,19 @@
                             <i class="ti-comment"></i>
                             contact with me
                         </button>
+                        <% if (loginName) { %>
+                            <div class="btn-group">
+                                <button type="button" class="btn text-white font-18 mt-5 header-modal-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <%= loginName %>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="/logout" class="dropdown-item">Logout</a>
+                                </div>
+                              </div>
+                        <% } else { %>
+                            <a href="/login" class="btn font-18 mt-5 header-modal-button" style="background-color: aliceblue;">Login</a>
+                        <% } %>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -27,7 +44,7 @@
                 </div>
             <% } %>
             <div class="header_bottom">
-                <div class="logo_area"><a href="index.html" class="logo"><img src="images/logo.jpg" alt=""></a></div>
+                <div class="logo_area"><a href="/" class="logo"><img src="images/logo.jpg" alt=""></a></div>
                 <div class="add_banner"><a href="#"><img src="images/addbanner_728x90_V1.jpg" alt=""></a></div>
             </div>
         </div>

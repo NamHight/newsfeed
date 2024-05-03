@@ -1,0 +1,14 @@
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    background-color: rgb(255, 247, 247);
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(216, 211, 211, 0.2);
+    text-align: center;
+    z-index: 1;
+    color: red;
+} 
+.dropdown-item:hover{
+    color: rgb(5, 163, 163);
+    font-weight: bolder;
+}
