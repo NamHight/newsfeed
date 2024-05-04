@@ -33,7 +33,6 @@
 
 
     <%- body %>
-
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -48,41 +47,26 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/contactModal">
+                    <form method="post" action="/">
                         <div class="form-group">
                             <label for="title" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title">
-                            <%if (errors && errors.title) {%>
-                                <span class="text-danger"><%= errors.title.msg %></span>
-                            <%}%>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-form-label">Name:</label>
                             <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
-                            <%if (errors && errors.name) {%>
-                                <span class="text-danger"><%= errors.name.msg %></span>
-                            <%}%>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email:</label>
                             <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                            <%if (errors && errors.email) {%>
-                                <span class="text-danger"><%= errors.email.msg %></span>
-                            <%}%>
                         </div>
                         <div class="form-group">
                             <label for="phone" class="col-form-label">Phone:</label>
                             <input type="number" class="form-control" id="phone" placeholder="Enter phone" name="phone">
-                            <%if (errors && errors.phone) {%>
-                                <span class="text-danger"><%= errors.phone.msg %></span>
-                            <%}%>
                         </div>
                         <div class="form-group">
                             <label for="content" class="col-form-label">Content:</label>
                             <textarea class="form-control" rows="5" id="content" name="content"></textarea>
-                            <%if (errors && errors.content) {%>
-                                <span class="text-danger"><%= errors.content.msg %></span>
-                            <%}%>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary header-modal-button">Send message</button>
