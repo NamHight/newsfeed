@@ -2,15 +2,27 @@
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
-const Login = require('../models/Users.js');
+const User = require('../models/Users.js');
 const News = require('../models/News.js');
 const session = require('express-session');
+const multer = require('multer');
+//upload Img
+const storage = multer.diskStorage({//diskStorage hàm lưu trữ 
+    destination:(req, file, res) => {//destination nơi lưu file
+        res(null, './public/images')//nếu ko có file trả về null, có file lưu vào './public/images'
+    },
+    filename: (req, file, res) => {//tên file
+        res(null, file.originalname)//originalname tên file đó
+    }
+})
+const upload = multer({ storage: storage })
 
 class IndexController {
     // hallder callback 
     index(req,res){
         const loginName = req.session.username || ''; // Lấy tên người dùng từ session, nếu ko được định nghĩa nó sẽ gán cho ''
-        res.render('pages/index', { title:'News Feeds',errors:'', loginName: loginName});
+        const img = req.session.Image
+        res.render('pages/index', { title:'News Feeds',errors:'', loginName: loginName,img:img});
     }
 
     performCreateModal = async (req,res) =>{
@@ -45,13 +57,14 @@ class IndexController {
         let user = req.body.username
         let pass = req.body.password
         const { username } = req.body;//username lấy giá trị từ req.body
-        let role = await Login.findOneRole({username: user})
-        let result = await Login.findOne({username: user, password: pass})
+        let role = await User.findOneRole({username: user})
+        let result = await User.findOne({username: user, password: pass})
         console.log("role: ",role.Role)
-        console.log("result: ",result.Status)
+        console.log("result: ",result.Status, result.Image)
         if(result.Status == 1){
             if(role.Role == 0){
                 req.session.username = username
+                req.session.Image = result.Image
                 res.redirect('/')
             }
             else
@@ -60,17 +73,40 @@ class IndexController {
         else 
             res.render('pages/login')
     }
-    Signup = async (req,res) =>{
-        let result = await Signup.createUser(req.body)
-        console.log("result: ",result.Status)
-        if(result){
-            res.redirect('http://localhost:8099/login')
+    Signup = async (req, res)=> {
+        try{
+            await upload.single('Image')(req, res, async function (err){
+                if (err instanceof multer.MulterError) {
+                    // Xử lý lỗi Multer
+                    console.log(err);
+                    res.status(500).send('Lỗi khi tải lên tệp.');
+                    return;
+                } else if (err) {
+                    // Xử lý lỗi khác
+                    console.log(err);
+                    res.status(500).send('Lỗi máy chủ.');
+                    return;
+                }
+                console.log('file:',req.file);//thông báo server
+                const {name,tel,Mail,username,password,Image,Description,CreateAt} = req.body
+                let result = await User.createUser({name: name,tel:tel,Mail:Mail,username:username,
+                    password:password,Image:Image,Description:Description,CreateAt:CreateAt})
+                console.log("result: ",result)
+                if(result){
+                    req.session.username = username
+                    res.redirect('http://localhost:8099/login')
+                }
+                else 
+                    res.render('http://localhost:8099/signup')
+            });
+        }catch (err){
+            console.log(err);
+            res.status(500).send('Server Error');
         }
-        else 
-            res.render('http://localhost:8099/signup')
     }
     getLogin(req,res){
-        res.render('pages/login', { title:'Login',errors:'' });
+        const loginName = req.session.username || ''; 
+        res.render('pages/login', { title:'Login',errors:'',loginName:loginName});
     }
 
     getSignup (req,res){
