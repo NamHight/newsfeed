@@ -1,10 +1,11 @@
 
-const  { multipleColumnSet } = require("../helpers/commom.ulti");
+const  { multipleColumnSet,multipleColumnSearch } = require("../helpers/commom.ulti");
 const query = require("../db/connection");
 
 class News{
     tableName = 'baiviet';
-
+    tableJoin = 'dmbaiviet';
+    tableImage = 'imagepost';
     find = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName}`;
         if (!Object.keys(params).length) {
@@ -17,6 +18,48 @@ class News{
         return await query(sql, [...values]);
     }
 
+    search = async (params = {},page,perpage,sort) => {
+        let sql = `SELECT a.id,a.title,a.description,a.author,c.fileName,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
+                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.idpost `;
+
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSearch(params); // {id : 1}
+        sql += ` WHERE ${columnSet} limit ${perpage} offset ${page} `;
+        if(sort){
+            sql += ` ORDER BY ${sort}`
+        }
+        // select * from table where id = 1
+        console.log("sql: " + sql);
+        return await query(sql, [...values]);
+    }
+
+    searchAndFilter = async (params = {},page,perpage,sort) => {
+        let sql = `SELECT a.id,a.title,a.description,a.author,c.fileName,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
+                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.idpost `;
+
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSearch(params); // {id : 1}
+        sql += ` WHERE ${columnSet} ORDER BY ${sort} limit ${perpage} offset ${page} `;
+        // select * from table where id = 1
+        console.log("sql: " + sql);
+        return await query(sql, [...values]);
+    }
+
+    count = async (params) =>{
+        const { columnSet, values } = multipleColumnSearch(params);
+        let sql = `SELECT COUNT(*) AS allcount FROM ${this.tableName}`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        sql += ` WHERE ${columnSet} `;
+        const result = await query(sql, [...values]);
+
+        return result[0].allcount;
+    }
     findOne = async (params) => {
         const { columnSet, values } = multipleColumnSet(params)
 

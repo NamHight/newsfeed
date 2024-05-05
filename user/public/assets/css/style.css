@@ -55,7 +55,7 @@ img:hover{opacity:0.75}
 .header_top_center{grid-column: 1;grid-row: 1; display:flex; justify-content: center;width:50%; align-items: center;}
 .top_nav{text-align:left}
 .top_nav li{display:inline-block}
-.top_nav li a{display:inline-block; border-right:1px solid #333; color:#fff; font-size:11px; font-weight:bold; padding:20px 15px; text-transform:uppercase; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
+.top_nav li a{display:inline-block; border-right:1px solid #333; color:#fff; font-size:11px; font-weight:bold;padding: 20px 15px;text-transform:uppercase; -odtext-transform:uppercase; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .top_nav li a:hover{background-color:#d083cf}
 .header_top_right{grid-column: 1;grid-row: 1;}
 .header_top_right > p{color:#fff; display:inline-block; float:right; font:bold 12px sans-serif; margin-bottom:0; padding-bottom:20px; padding-right:8px; padding-top:20px}

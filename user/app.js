@@ -15,6 +15,8 @@ const session = require('express-session')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const contactRouter = require('./routes/contact');
+const searchRouter = require('./routes/search');
+const cors = require("cors");
 
 const port = 8099
 dotenv.config();
@@ -43,6 +45,7 @@ app.use(session({
 app.use(indexRouter);
 app.use(usersRouter);
 app.use(contactRouter);
+app.use(searchRouter);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
