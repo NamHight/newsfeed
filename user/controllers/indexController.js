@@ -19,10 +19,55 @@ const upload = multer({ storage: storage })
 
 class IndexController {
     // hallder callback 
-    index(req,res){
-        const loginName = req.session.username || ''; // Lấy tên người dùng từ session, nếu ko được định nghĩa nó sẽ gán cho ''
-        const img = req.session.Image
-        res.render('pages/index', { title:'News Feeds',errors:'', loginName: loginName,img:img});
+
+    async index(req, res) {
+        try {
+            //biến truyền vào
+            let thethao = 'thethao'
+            let thoitiet = 'thoitiet'
+            let thucPham = 'thucPham'
+            let nhac = 'nhac'
+            let phimanh = 'phimanh'
+            let dienvien = 'dienvien'
+
+            //biến được truyền vào ham
+            //thethao
+            let sports = await News.dmBaiViet(thethao);
+            let sportMostViews = await News.dmMostViews(thethao);
+            //thoitiet
+            let weather = await News.dmBaiViet(thoitiet);
+            let weatherMostViews = await News.dmMostViews(thoitiet);
+            //thucPham
+            let food = await News.dmBaiViet(thucPham);
+            let foodsMostViews = await News.dmMostViews(thucPham);
+            //nhac
+            let music = await News.dmBaiViet(nhac);
+            let musicMostViews = await News.dmMostViews(nhac);
+            //phimanh
+            let movie = await News.dmBaiViet(phimanh);
+            let movieMostViews = await News.dmMostViews(phimanh);
+            //dienvien
+            let actor = await News.dmBaiViet(dienvien);
+            let actorMostViews = await News.dmMostViews(dienvien);
+
+            let Photography =  await News.Photography();
+            let mostViews = await News.mostviews();
+            let latestPost = await News.latestPost();
+            let latestNew = await News.latestNews();
+            let postNews =  await News.postNews()
+            let loginName = req.session.username || '';
+            let img = req.session.Image;
+
+            res.render('pages/index', { title: 'News Feeds', errors: '',
+            loginName: loginName, img: img, latestNew:latestNew, latestPost:latestPost, mostViews:mostViews,
+            sports:sports, sportMostViews:sportMostViews, postNews:postNews, weather:weather, weatherMostViews:weatherMostViews,
+            food:food, foodsMostViews:foodsMostViews, music: music, musicMostViews:musicMostViews,
+            movie:movie, movieMostViews:movieMostViews, actor:actor, actorMostViews:actorMostViews, Photography:Photography
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).send('Internal Server Error');
+        }
     }
 
     performCreateModal = async (req,res) =>{

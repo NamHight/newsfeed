@@ -16,7 +16,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const contactRouter = require('./routes/contact');
 const searchRouter = require('./routes/search');
-const cors = require("cors");
+const newsRouter = require('./routes/News');
 
 const port = 8099
 dotenv.config();
@@ -46,6 +46,7 @@ app.use(indexRouter);
 app.use(usersRouter);
 app.use(contactRouter);
 app.use(searchRouter);
+app.use(newsRouter);
 
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
