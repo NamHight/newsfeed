@@ -6,6 +6,7 @@ class News{
     tableName = 'baiviet';
     tableJoin = 'dmbaiviet';
     tableImage = 'imagepost';
+
     find = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName}`;
         if (!Object.keys(params).length) {
@@ -18,19 +19,15 @@ class News{
         return await query(sql, [...values]);
     }
 
-    search = async (params = {},page,perpage,sort) => {
+    search = async (params = {},page,perpage) => {
         let sql = `SELECT a.id,a.title,a.description,a.author,c.fileName,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
-                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.idpost `;
+                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.Idpost`;
 
         if (!Object.keys(params).length) {
             return await query(sql);
         }
-        const { columnSet, values } = multipleColumnSearch(params); // {id : 1}
+        const { columnSet, values } = multipleColumnSearch(params);
         sql += ` WHERE ${columnSet} limit ${perpage} offset ${page} `;
-        if(sort){
-            sql += ` ORDER BY ${sort}`
-        }
-        // select * from table where id = 1
         console.log("sql: " + sql);
         return await query(sql, [...values]);
     }

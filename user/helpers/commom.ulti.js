@@ -28,7 +28,7 @@ exports.multipleColumnSearch = (object) => {
     console.log("show key ",keys);
     const values = Object.values(object);
     console.log("show values ",values)
-    columnSet = keys.map(key => `${key} LIKE ?`).join(' OR ');
+    columnSet = keys.map(key => `${key} LIKE '%${values[0]}%'`).join(' OR ');
     // where id = 1, title = "the e"
     console.log("show columnSet ", columnSet);
     return {

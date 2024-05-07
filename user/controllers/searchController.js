@@ -5,6 +5,7 @@ class SearchController {
     performSearch = async (req,res) =>{
         const query = req.query.search;
         const filter = req.query.filter;
+        const username = req.session.username;
         const page = parseInt(req.query.page) || 0;
         const perPage = 10;
         let result = await News.search({title:query, description:query},page,perPage);
@@ -22,7 +23,8 @@ class SearchController {
             totalPages:totalPages,
             dated: convertDate,
             query:query,
-            errors:''
+            errors:'',
+            loginName:username
         });
     }
 }

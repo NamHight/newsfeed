@@ -21,8 +21,8 @@
         <%} else {%>
         <% Data.forEach((item) => {%>
         <section class="search-result-item">
-            <a class="image-link" href="/"><img class="image" src="images/<%= item.fileName %>" alt="<%= item.fileName%>">
-            </a>
+                <a class="image-link" href="/"><img class="image" src="images/<%= item.fileName %>" alt="<%= item.fileName%>" width="100%">
+                </a>
             <div class="search-result-item-body">
                 <div class="row">
                         <h5 class="search-result-item-heading"><%= item.name  %> - <%= dated(item.createAt)%></h5>
