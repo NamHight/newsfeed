@@ -1,7 +1,8 @@
 
-const IndexModel = require('../models/index.js');
+const ImageModel = require('../models/Image');
 
 class ImageController {
+  
   
 }
 

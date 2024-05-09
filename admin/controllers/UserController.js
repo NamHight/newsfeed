@@ -132,6 +132,36 @@ class UserController {
                 }else{
                     res.redirect('/createuser');
                 }
+            });await upload.single('image')(req, res, async function (err){
+                if (err instanceof multer.MulterError) {
+                    // Xử lý lỗi Multer
+                    console.log(err);
+                    res.status(500).send('Lỗi khi tải lên tệp.');
+                    return;
+                } else if (err) {
+                    // Xử lý lỗi khác
+                    console.log(err);
+                    res.status(500).send('Lỗi máy chủ.');
+                    return;
+                }
+                const pass = bcrypt.hashSync(req.body.password, 10);
+                const data = {
+                    Username: req.body.username,
+                    Name: req.body.name,
+                    Phone: req.body.phone,
+                    Password: pass,
+                    Email: req.body.email,
+                    Description: req.body.description,
+                    Role: req.body.role,
+                    Image: req.file ? req.file.originalname : null,
+                    createAt: new Date(),
+                }
+                const result = await User.create(data);
+                if(result > 0){
+                    res.redirect('/users');
+                }else{
+                    res.redirect('/createuser');
+                }
             });
         }catch (err){
             console.log(err);

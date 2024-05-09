@@ -1,0 +1,109 @@
+
+
+<div class="text-center rounded text-info h5" style="margin-bottom: 20px;"> 
+    <marquee behavior="scroll" direction="left">
+        <%=title %>
+    </marquee>
+</div>
+<div class="container d-flex justify-content-between">
+    <div>
+        <a href="/add" class="btn btn-primary active" aria-current="page">Add News</a>
+        <a href="/news" class="btn btn-warning active" aria-current="page">Home News</a>
+    </div>
+    
+    <form class="d-flex" action="/search">
+        <div class=" d-flex border justify-content-around align-items-center rounded-left bg-info text-white">
+            <div class="form-check" onclick="info1()" style="margin-left: 10px; margin-right: 5px;">
+                <input class="form-check-input" type="radio" name="filter" id="flexRadioDefault1" value="catetory">
+                <label class="form-check-label" for="flexRadioDefault1">Catetory</label>
+            </div>
+            <div class="form-check" onclick="info2()" style="margin-right: 10px;">
+                <input class="form-check-input" type="radio" name="filter" id="flexRadioDefault2" value="time" style="line-height: 42px;">
+                <label class="form-check-label" for="flexRadioDefault2">Time</label>
+            </div>
+        </div>
+        
+        <div class="input-group rounded-end" onclick="info3()">
+            <input type="text" class="form-control" placeholder="Search" name="key">
+            <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+        </div>
+        <%# nếu input-radio có thuộc tính name=filer và iput-text có tt name=key thì sau khi bấm submit 
+        đường dẫn lúc này sẽ là localhost:3000/search?filter=catetory&key=text_nhâp_vô%>
+    </form>
+</div>
+
+<div class="mt-3 container">
+    <table class="mt-2 table table-striped table-bordered table-sm text-center">
+        <thead class="thead-info">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>View</th>
+                <th>Catetory</th>
+                <th>CreateAt</th>
+                <th>UpdateAt</th>
+                <th>Image</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% posts.forEach( (element )=> { %>
+                <tr>
+                    <td><%=element.Id%></td>
+                    <td><%=element.title%></td>
+                    <td class="description"><%= element.description %></td>
+                    <td><%= element.author %></td>
+                    <td><%= element.view %></td>
+                    <td><%= element.catetory %></td>
+                    <td><%=formatTime(element.createAt).format('LLL')%></td>
+                    <td><%= formatTime(element.updateeAt).format('LLL') %></td>
+                    <td><%= element.image %></td>
+                    <%if(element.status ==1) {%>
+                        <td><a href="active?id=<%=element.Id%>">Active</a></td>
+                    <%} else {%>
+                        <td><a href="active?id=<%=element.Id%>">No Active</a></td>
+                    <%}%>
+                    <td>
+                        <a href="update?id=<%=element.Id%>">Update</a>
+                    </td>
+                    <td><a href="delete?id=<%=element.Id%>">Delete</a></td>
+                </tr>
+            <% });  %>
+        </tbody>
+    </table>
+    <div class="container col-sm-12 mt-5 mb-5" style="position:relative">
+        <div class="row">
+            <div class="col-md-5" style="left: 0; padding-left: 0;">
+                <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">
+                    Showing <%=((page-1)*10 +1)%> to <%=(page*10)%> of <%= allNews %> entries
+                </div>
+            </div>
+            <div class="col-md-7" >
+                <div class="dataTables_paginate paging_simple_numbers  position" id="datatable_paginate" >
+                    <ul class="pagination" style="position: absolute; right: 0;">
+
+                        <li class="paginate_button page-item previous <%if(page==1){%> disabled <%}%>" id="datatable_previous">
+                            <a href="/news?page=<%=(page-1)%>" aria-controls="datatable" data-dt-idx="<%=(page-1)%>" tabindex="" class="page-link">Previous</a>
+                        </li>
+                       
+                        <% for (let i=1 ; i<=sotrang; i++) {%>
+                            <li class="paginate_button page-item <%if(page==i){%>active<%}%>">
+                                <a href="/news?page=<%=i%>" aria-controls="datatable" data-dt-idx="<%=i%>" tabindex="" class="page-link"><%=i%></a>
+                            </li>
+                        <%}%>
+                        <li class="paginate_button page-item next <%if(page==sotrang){%> disabled <%}%>" id="datatable_next">
+                            <a href="/news?page=<%=(page+1)%>" aria-controls="datatable" data-dt-idx="<%=(page+1)%>" tabindex="" class="page-link">Next</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>

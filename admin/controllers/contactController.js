@@ -1,12 +1,13 @@
 const Contact = require('../models/Contact');
 const {validationResult} = require('express-validator')
-const {convertDate} = require("../helpers/commom.ulti");
+const { convertDate } = require("../helpers/commom.ulti");
 class ContactController {
     index = async (req,res) =>{
         const result = await Contact.findDesc();
         if (!result.length) {
             throw new HttpException(404, 'news not found');
         }
+        console.log(" ket qua truy van day nay", result)
         res.render('pages/contact',{
             title: 'Contact management',
             datas: result,
