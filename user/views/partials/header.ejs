@@ -5,19 +5,29 @@
                 <div class="header_top_left">
                     <ul class="top_nav">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/">About</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/">Danh Sách Danh Mục</a></li>
+                        <li><a href="/contact">Liên Hệ</a></li>
                     </ul>
                 </div>
-
                 <div class="header_top_right">
                     <div class="header-modal">
                         <button type="button" class="btn text-white font-18 mt-5 header-modal-button" data-toggle="modal" data-target="#contactModal" data-whatever="@mdo">
                             <i class="ti-comment"></i>
                             contact with me
                         </button>
+                        <% if (loginName) { %>
+                            <div class="btn-group">
+                                <button type="button" class="btn text-white font-18 mt-5 header-modal-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                   
+                                    <span class="loginName"><%= loginName %></span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="/logout" class="dropdown-item">Logout</a>
+                                </div>
+                              </div>
+                        <% } else { %>
+                            <a href="/login" class="btn font-18 mt-5 header-modal-button loginName" style="background-color: aliceblue;">Login</a>
+                        <% } %>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -28,8 +38,8 @@
                 </div>
             <% } %>
             <div class="header_bottom">
-                <div class="logo_area"><a href="/" class="logo"><img src="images/logo.jpg" alt=""></a></div>
-                <div class="add_banner"><a href="/"><img src="images/addbanner_728x90_V1.jpg" alt=""></a></div>
+                <div class="logo_area"><a href="/" class="logo"><img src="images/NTN.png" alt="NTN.png" style="width: 350px; height: 90px; "></a></div>
+                <div class="add_banner"><a href="#"><img src="images/addbanner_728x90_V1.jpg" alt=""></a></div>
             </div>
         </div>
     </div>

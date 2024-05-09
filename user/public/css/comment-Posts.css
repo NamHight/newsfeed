@@ -1,0 +1,23 @@
+.submit-comment{
+    float: right;
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color: aliceblue;
+    color: black;
+    font-weight: bolder;
+    width: 100px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.container-Content{
+    margin-top:50px; 
+    background-color: #f9f9f9; /* Màu nền */
+    border: 1px solid #ddd; /* Viền */
+    border-radius: 8px; /* Độ cong của viền */
+    padding: 15px; /* Khoảng cách giữa nội dung và viền */
+    margin-bottom: 20px; /* Khoảng cách giữa các ti-comment */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Đổ bóng */
+}
+.Content{
+    margin-left: 20px;
+    margin-top: 5px;
+}

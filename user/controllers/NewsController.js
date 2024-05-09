@@ -1,6 +1,6 @@
-const IndexModel = require('../../models/user/index.js');
-const News = require('../../models/user/News.js');
-const {convertDate} = require('../../helpers/commom.ulti.js')
+const IndexModel = require('../models/index.js');
+const News = require('../models/News.js');
+const {convertDate} = require('../helpers/commom.ulti.js')
 
 
 class NewsController {

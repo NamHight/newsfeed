@@ -1,0 +1,29 @@
+.container-login{
+    margin-top: 20%;
+}   
+.form-login{
+    width: 40%;
+    background-color: rgb(38, 76, 76);
+    padding: 50px;
+    margin: 0 auto;
+    color: aliceblue;
+}
+.button-login{
+    display: flex;
+    justify-content: center;
+}
+.h1-login{
+    font-size: 3em;
+    text-shadow: 2px 2px 5px rgb(0, 141, 211);
+}
+.label-login{
+    font-size: 1.2em;
+    padding-right: 10px;
+}
+.a-login:link {
+  text-decoration: none;
+}
+.a-login:hover {
+  text-decoration: underline;
+  color: antiquewhite;
+}
