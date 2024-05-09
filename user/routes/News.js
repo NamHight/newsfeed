@@ -1,12 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const newsController = require('../../controllers/user/NewsController')
+const newsController = require('../controllers/NewsController')
 /* GET home page. */
 
-<<<<<<< HEAD
-//router.get('/Post',newsController.news);
-=======
-router.get('news/',newsController.news);
->>>>>>> origin
+//router.get('news/',newsController.news);
 
 module.exports = router;

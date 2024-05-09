@@ -10,9 +10,9 @@
         <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="slick_slider">
                 <% postNews.forEach(item => { %>
-                    <div class="single_iteam"> <a href="/<%= item.title %>?id=<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""></a>
+                    <div class="single_iteam"> <a href="/detail<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""></a>
                         <div class="slider_article">
-                            <h2><a class="slider_tittle" href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a></h2>
+                            <h2><a class="slider_tittle" href="/detail<%=item.Id%>"><%= item.title %></a></h2>
                             <p><%= item.description %></p>
                             <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %></p>
 
@@ -29,8 +29,8 @@
                     <ul class="latest_postnav">
                         <% latestPost.forEach(item => { %>
                             <li>
-                                <div class="media"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                    <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <h4><%= item.title %> </h4></a> 
+                                <div class="media"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                    <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title" style="font-size: 20px; font-weight: bolder;"><%= item.title %></a> 
                                         <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %></p>
                                     </div>
                                 </div>
@@ -54,11 +54,12 @@
                         <ul class="business_catgnav  wow fadeInDown">
                             <% sportMostViews.forEach(item => { %>
                             <li>
-                                <figure class="bsbig_fig"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="featured_img"> <img alt="<%= item.image %>" src="images/<%= item.image %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
-                                    <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                <figure class="bsbig_fig"> <a href="/detail<%=item.Id%>" class="featured_img"> <img alt="<%= item.image %>" src="images/<%= item.FileName %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
+                                    <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                     <p><%= item.description %> 
                                         <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, sed. Quam molestiae illum similique quae aliquam illo magnam at nostrum quasi!
                                     </p>
+                                    <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                 </figure>
                             </li>
                             <% }) %>
@@ -68,8 +69,8 @@
                         <ul class="spost_nav">
                             <% sports.forEach(item => { %>
                                 <li>
-                                    <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                        <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %> </a> 
+                                    <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                        <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %> </a> 
                                             <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                         </div>
                                     </div>
@@ -85,11 +86,12 @@
                             <ul class="business_catgnav wow fadeInDown">
                                 <% weatherMostViews.forEach(item => { %>
                                 <li>
-                                    <figure class="bsbig_fig"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="featured_img"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
-                                        <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                    <figure class="bsbig_fig"> <a href="/detail<%=item.Id%>" class="featured_img"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
+                                        <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                         <p><%= item.description%>
                                             <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, sed. Quam molestiae illum similique quae aliquam illo magnam at nostrum quasi!
                                         </p>
+                                        <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                     </figure>
                                 </li>
                                 <% }) %>
@@ -97,8 +99,8 @@
                             <ul class="spost_nav">
                                 <% weather.forEach(item => { %>
                                 <li>
-                                    <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                        <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %></a>
+                                    <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                        <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %></a>
                                             <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %></p> 
                                         </div>
                                     </div>
@@ -113,12 +115,13 @@
                             <ul class="business_catgnav">
                                 <% foodsMostViews.forEach(item => { %>
                                 <li>
-                                    <figure class="bsbig_fig wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="featured_img"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
-                                        <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                    <figure class="bsbig_fig wow fadeInDown"> <a href="/detail<%=item.Id%>" class="featured_img"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> <span class="overlay"></span> </a>
+                                        <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                         <p>
                                             <%= item.description %> <br>
                                             Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...
                                         </p>
+                                        <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                     </figure>
                                 </li>
                                 <% }) %>
@@ -126,8 +129,8 @@
                             <ul class="spost_nav">
                                 <% food.forEach(item => { %>
                                     <li>
-                                        <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                            <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %></a>
+                                        <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                            <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %></a>
                                                 <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p> 
                                             </div>
                                         </div>
@@ -143,12 +146,13 @@
                         <ul class="business_catgnav">
                             <% musicMostViews.forEach(item => { %>
                             <li>
-                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/<%= item.title %>?id=<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
-                                    <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/detail<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
+                                    <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                     <p>
                                         <%= item.description %> <br>
                                         Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...
                                     </p>
+                                    <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                 </figure>
                             </li>
                             <% }) %>
@@ -158,8 +162,8 @@
                         <ul class="spost_nav">
                             <% music.forEach(item => { %>
                             <li>
-                                <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                    <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
+                                <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                    <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
                                         <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p> 
                                     </div>
                                 </div>
@@ -174,12 +178,13 @@
                         <ul class="business_catgnav">
                             <% movieMostViews.forEach(item => { %>
                             <li>
-                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/<%= item.title %>?id=<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
-                                    <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/detail<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
+                                    <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                     <p>
                                         <%= item.description %> <br>
                                         Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...
                                     </p>
+                                    <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                 </figure>
                             </li>
                             <% }) %>
@@ -189,8 +194,8 @@
                         <ul class="spost_nav">
                             <% movie.forEach(item => { %>
                             <li>
-                                <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                    <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
+                                <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                    <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
                                         <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p> 
                                     </div>
                                 </div>
@@ -205,12 +210,13 @@
                         <ul class="business_catgnav">
                             <% actorMostViews.forEach(item => { %>
                             <li>
-                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/<%= item.title %>?id=<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
-                                    <figcaption> <a href="/<%= item.title %>?id=<%=item.Id%>"><%= item.title %></a> </figcaption>
+                                <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/detail<%=item.Id%>"> <img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""> <span class="overlay"></span> </a>
+                                    <figcaption> <a href="/detail<%=item.Id%>"><%= item.title %></a> </figcaption>
                                     <p>
                                         <%= item.description %> <br>
                                         Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...
                                     </p>
+                                    <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p>
                                 </figure>
                             </li>
                             <% }) %>
@@ -220,8 +226,8 @@
                         <ul class="spost_nav">
                             <% actor.forEach(item => { %>
                             <li>
-                                <div class="media wow fadeInDown"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                                    <div class="media-body"> <a href="/<%= item.title %>?id=<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
+                                <div class="media wow fadeInDown"> <a href="/detail<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                                    <div class="media-body"> <a href="/detail<%=item.Id%>" class="catg_title"> <%= item.title %></a> 
                                         <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %> </p> 
                                     </div>
                                 </div>
@@ -231,7 +237,7 @@
                     </div>
                 </div>
                 <div class="single_post_content">
-                    <h2><span>Photography</span></h2>
+                    <h2 id="photography"><span>Photography</span></h2>
                     <ul class="photograph_nav  wow fadeInDown">
                         <% Photography.forEach(item => { %>
                         <li>

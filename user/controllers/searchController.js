@@ -1,17 +1,17 @@
 const News = require('../models/News');
 const {validationResult} = require('express-validator')
 const {convertDate} = require('../helpers/commom.ulti')
+const moment = require("moment")
 class SearchController {
     performSearch = async (req,res) =>{
         const query = req.query.search;
         const filter = req.query.filter;
         const username = req.session.username;
-        let mostViews = await News.mostviews();
-        let id = req.query.page
-        let findResult =  await News.Posts(id)
-        let latestNew = await News.latestNews();
-        const page = parseInt(req.query.page) || 0;
         const perPage = 10;
+        const [mostViews,latestNew] = await Promise.all([
+            News.mostviews(), News.latestNews()
+        ])
+       const page = parseInt(req.query.page) || 0
         let result = await News.search({title:query, description:query},page,perPage);
         console.log("filter",filter);
         if(filter !== undefined){
@@ -30,8 +30,7 @@ class SearchController {
             errors:'',
             loginName:username,
             mostViews:mostViews,
-            latestNew:latestNew,
-            findResult:findResult
+            latestNew:latestNew,moment: moment
         });
     }
 }

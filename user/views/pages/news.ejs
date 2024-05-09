@@ -69,20 +69,26 @@
             </div>
             <div class="comment-posts">
               <form action="/commemt-posts" method="post">
+                <input class="form-control" type="text" name="id" value="<%= news.Id %>" style="display: none;">
                 <div class="mb-3">
-                  <label for="email" class="form-label label-email">Bình Luận</label>
-                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Address...">
+                  <label for="text" class="form-label label-email">Bình Luận</label>
+                  <textarea type="text" name="comments" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập nội dung bình luận..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary submit-comment">Submit</button>
               </form>
+            </div>
+            <div class="container-Content">
+                <% comments.forEach(item => {%>
+                  <p class="Content"><%= item.Content %></p>
+                <% }) %>
             </div>
             <div class="related_post">
               <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
               <ul class="spost_nav wow fadeInDown animated">
                 <% relatedPost.forEach(item => { %>
                 <li>
-                  <div class="media"> <a class="media-left" href="/news?id=<%=item.Id%>"> <img src="images/<%= item.image %>" alt="<%= item.image %>"> </a>
-                    <div class="media-body"> <a class="catg_title" href="/news?id=<%=item.Id%>"> <%= item.title %> </h4></a> 
+                  <div class="media"> <a class="media-left" href="/detail<%=item.Id%>"> <img src="images/<%= item.image %>" alt="<%= item.image %>"> </a>
+                    <div class="media-body"> <a class="catg_title" href="/detail<%=item.Id%>"> <%= item.title %> </h4></a> 
                       <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %></p>
                     </div>
                   </div>

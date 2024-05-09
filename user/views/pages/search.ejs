@@ -19,17 +19,18 @@
             <%} else {%>
             <% Data.forEach((item) => {%>
             <section class="search-result-item">
-                    <a class="image-link" href="/news?id=<%=item.Id%>"><img class="image" src="images/<%= item.image %>" alt="<%= item.fileName%>" width="100%">
+                    <a class="image-link" href="/detail<%=item.Id%>"><img class="image" src="images/<%= item.image %>" alt="<%= item.fileName%>" width="100%">
                     </a>
                 <div class="search-result-item-body">
                     <div class="row">
-                        <h3><a class="info search-result-item-title" href="/news?id=<%=item.Id%>"><%= item.title %></a></h3>
+                        <h3><a class="info search-result-item-title" href="/detail<%=item.Id%>"><%= item.title %></a></h3>
                         <p class="description"><%= item.description %></p>
                         <p class="search-result-item-heading"><%= item.name  %> - <%= dated(item.createAt)%></p>
                     </div>
                 </div>
             </section>
             <%})} %>
+            
             <div class="text-align-center">
                 <ul class="pagination pagination-sm">
                     <% if(totalPages > 0) { %>

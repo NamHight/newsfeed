@@ -35,7 +35,7 @@ class IndexController {
 
            const [sports,
             sportMostViews,weather,weatherMostViews,food,foodsMostViews,music,musicMostViews,movie,movieMostViews,actor,actorMostViews,
-            comments,Photography,mostViews,latestPost,latestNew,postNews] = await Promise.all([
+            Photography,mostViews,latestPost,latestNew,postNews] = await Promise.all([
                 News.dmBaiViet(thethao),
                 News.dmMostViews(thethao),
                 News.dmBaiViet(thoitiet),
@@ -48,7 +48,6 @@ class IndexController {
                 News.dmMostViews(phimanh),
                 News.dmBaiViet(dienvien),
                 News.dmMostViews(dienvien),
-                News.comments(),
                 News.Photography(),
                 News.mostviews(),
                 News.latestPost(),
@@ -58,7 +57,6 @@ class IndexController {
 
             let loginName = req.session.username || '';
             let img = req.session.Image;
-            console.log("show mis",sportMostViews);
             res.render('pages/index', { title: 'News Feeds', errors: '',
             loginName: loginName, img: img, latestNew:latestNew, latestPost:latestPost, mostViews:mostViews,
             sports:sports, sportMostViews:sportMostViews, postNews:postNews, weather:weather, 
@@ -66,7 +64,7 @@ class IndexController {
             food:food, foodsMostViews:foodsMostViews, music: music, musicMostViews:musicMostViews,
             movie:movie, movieMostViews:movieMostViews, actor:actor, actorMostViews:actorMostViews, 
             Photography:Photography,
-            moment:moment, comments:comments
+            moment:moment
             });
         } catch (error) {
             console.error('Error:', error);
@@ -102,7 +100,7 @@ class IndexController {
             console.log("error",e);
         }
     }
-<<<<<<< HEAD
+
     Login = async (req,res) =>{
         let user = req.body.username
         let pass = req.body.password
@@ -123,6 +121,7 @@ class IndexController {
         else 
             res.render('pages/login')
     }
+
     Signup = async (req, res)=> {
         try{
             await upload.single('Image')(req, res, async function (err){
@@ -154,6 +153,7 @@ class IndexController {
             res.status(500).send('Server Error');
         }
     }
+
     getLogin(req,res){
         const loginName = req.session.username || ''; 
         res.render('pages/login', { title:'Login',errors:'',loginName:loginName});
@@ -162,16 +162,18 @@ class IndexController {
     getSignup (req,res){
         res.render('pages/signup', { title:'Signup',errors:'' });
     }
+
     async getSingle_page (req,res){
-        let id = req.query.id;
+        let id = req.params.id;
         const [mostViews, latestNew, news, relatedPost,comments] = await Promise.all([
-            News.mostviews(),News.latestNews(), News.Posts({Id:id}), News.RelatedPost({Id:id}),News.comments()
+            News.mostviews(),News.latestNews(), News.Posts({Id:id}), News.RelatedPost({Id:id}),News.comments({id: id})
         ]);
         console.log('show nw',news)
         let loginName = req.session.username || '';
         res.render('pages/news', { title:news.title,errors:'', loginName:loginName, latestNew:latestNew, 
         mostViews:mostViews, news:news, moment:moment, relatedPost:relatedPost, comments,comments});
     }
+
     logout (req,res){
         req.session.destroy((err) => { //destroy huỷ bỏ session
             if (err) {
@@ -182,34 +184,29 @@ class IndexController {
             }
         });
     }
-    commentPosts = async (req, res)=> {
-        try{
-            const {email} = req.body
-            let result = await User.createUser({email})
-            let id = req.query.page;
-            console.log("result: ",result)
-            if(result){
-                req.session.email = email
-                res.redirect(`http://localhost:8099/detailPosts?page=${id}`)
-            }
-            else 
-                res.render('http://localhost:8099/signup')
-            
-        }
-        catch (err){
-            console.log(err);
-            res.status(500).send('Server Error');
-        }
-=======
 
     createNewsLetter = async(req, res)=>{
         let mail = req.body.email
         console.log("mail đã nhận" , req.body) 
         console.log("đã vào được thêm newsletter")
-        var result = indexModel.create({Mail:mail})
+        var result = await IndexModel.create({Mail:mail})
         res.redirect('/')
->>>>>>> origin
+    }
+
+    createComment = async(req, res)=>{
+        let loginName = req.session.username || ''
+        console.log('show',loginName)
+        if( loginName){
+            let id = req.body.id
+            let content = req.body.comments
+            console.log("content" , content) 
+            console.log("đã vào được thêm newsletter")
+            var result = await News.createComments({content:content,id:id})
+            res.redirect(`http://localhost:8099/detail${id}`)
+        }
+        else{
+            res.redirect('http://localhost:8099/login')
+        }
     }
 }
-
 module.exports = new IndexController;

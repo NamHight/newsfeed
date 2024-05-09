@@ -9,11 +9,11 @@ router.post('/contactModal',IndexController.performCreateModal)
 router.get('/login',IndexController.getLogin);
 router.get('/signup',IndexController.getSignup);
 router.get('/logout',IndexController.logout);
-router.get('/news',IndexController.getSingle_page);
+router.get('/detail:id',IndexController.getSingle_page);
 
 router.post('/login',IndexController.Login);
 router.post('/signup',IndexController.Signup);
-router.post('/commemt-posts',IndexController.commentPosts);
-router.post('/',IndexController.createNewsLetter )
+router.post('/',IndexController.createNewsLetter)
+router.post('/commemt-posts',IndexController.createComment)
 
 module.exports = router;
