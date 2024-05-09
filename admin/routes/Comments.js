@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const ImageController = require('../controllers/ImagesController')
+const CommentController = require('../controllers/CommentsController')
 /* GET home page. */
 
-router.get('/',ImageController.index);
-
+router.get('/comments',CommentController.index);
+router.get('/activeComment', CommentController.active)
 
 module.exports = router;

@@ -2,6 +2,7 @@
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
+const indexModel = require('../models/index.js')
 
 class IndexController {
     // hallder callback 
@@ -36,6 +37,14 @@ class IndexController {
         }catch (e){
             console.log("error",e);
         }
+    }
+
+    createNewsLetter = async(req, res)=>{
+        let mail = req.body.email
+        console.log("mail đã nhận" , req.body) 
+        console.log("đã vào được thêm newsletter")
+        var result = indexModel.create({Mail:mail})
+        res.redirect('/')
     }
 }
 

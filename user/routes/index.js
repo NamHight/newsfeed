@@ -6,5 +6,6 @@ const ContactController = require('../controllers/contactController')
 
 router.get('/',IndexController.index);
 router.post('/contactModal',IndexController.performCreateModal)
+router.post('/',IndexController.createNewsLetter )
 
 module.exports = router;

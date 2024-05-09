@@ -8,8 +8,11 @@ const logger = require('morgan');
 const expressLayout = require('express-ejs-layouts');
 const indexRouter = require('./routes/index');
 const newsRouter = require('./routes/News');
+const catetoryRouter = require('./routes/DMNews')
 const userRouter = require('./routes/users');
-const contactRouter = require('./routes/contact');
+const newsLetterRouter = require('./routes/NewsLetter')
+const commentrRouter = require('./routes/Comments')
+const contactRouter = require('./routes/Contact');
 const cors = require("cors");
 
 const port = 3000
@@ -32,9 +35,15 @@ app.use(bodyParser.json())
 app.use(cors());
 app.options("*", cors());
 
+// cấu hình đường dẫn của trang
 app.use(indexRouter);
 app.use(userRouter);
+app.use(newsRouter);
+app.use(catetoryRouter);
+app.use(newsLetterRouter);
+app.use(commentrRouter);
 app.use(contactRouter);
+
 //catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
