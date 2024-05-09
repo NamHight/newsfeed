@@ -5,45 +5,57 @@
 
 <%- include('../partials/navbar.ejs'); %>
 
-<div class="row ng-scope">
-    <div class="col-md-3 col-md-push-9">
-        <h4>Results <span class="fw-semi-bold">Filtering</span></h4>
-        <p class="text-muted fs-mini">Listed content is categorized by the following groups:</p>
-        <ul class="nav nav-pills nav-stacked search-result-categories mt">
-            <li><a style="color: black" href="/search?search=<%= query %>&page=<%= currentPage %>&filter=catetory">Category</a></li>
-            <li><a style="color: black" href="/search?search=<%= query %>&page=<%= currentPage %>&filter=createAt">New News</a></li>
-        </ul>
-    </div>
-    <div class="col-md-9 col-md-pull-3">
-        <p class="search-results-count">About <%= Data.length %> results</p>
-        <% if(Data.length === 0 ) {%>
-                <p>Not found News</p>
-        <%} else {%>
-        <% Data.forEach((item) => {%>
-        <section class="search-result-item">
-                <a class="image-link" href="/"><img class="image" src="images/<%= item.fileName %>" alt="<%= item.fileName%>" width="100%">
-                </a>
-            <div class="search-result-item-body">
-                <div class="row">
-                        <h5 class="search-result-item-heading"><%= item.name  %> - <%= dated(item.createAt)%></h5>
-                        <a class="info search-result-item-title" href="news/<%= item.id %>"><%= item.title %></a>
+<%- include('../partials/newSection.ejs'); %>
+<div id="contentSection">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="left_content">
+            <ol class="breadcrumb">
+                <li style="color: aliceblue;">Search</li>
+                <li style="color: gray;"><%= query %></li>
+              </ol>
+            <p class="search-results-count">About <%= Data.length %> results</p>
+            <% if(Data.length === 0 ) {%>
+                    <p>Not found News</p>
+            <%} else {%>
+            <% Data.forEach((item) => {%>
+            <section class="search-result-item">
+                    <a class="image-link" href="/detailPosts?page=<%=item.id%>"><img class="image" src="images/<%= item.fileName %>" alt="<%= item.fileName%>" width="100%">
+                    </a>
+                <div class="search-result-item-body">
+                    <div class="row">
+                        <h3><a class="info search-result-item-title" href="/detailPosts?page=<%=item.id%>"><%= item.title %></a></h3>
                         <p class="description"><%= item.description %></p>
+                        <p class="search-result-item-heading"><%= item.name  %> - <%= dated(item.createAt)%></p>
+                    </div>
                 </div>
+            </section>
+            <%})} %>
+            <div class="text-align-center">
+                <ul class="pagination pagination-sm">
+                    <% if(totalPages > 0) { %>
+                        <ul class="pagination pagination-sm">
+                            <li class="<%= currentPage <= 1 ? 'disabled' : '' %>"><a href="/search?search=<%= query %>&page=<%= currentPage - 1 %>">Prev</a></li>
+                            <% for(let i = 0; i < totalPages; i++) { %>
+                                <li class="<%= currentPage == i ? 'active' : '' %>"><a href="/search?search=<%= query %>&page=<%= i %>"><%= i %></a></li>
+                            <% } %>
+                            <li class="<%= currentPage >= totalPages ? 'disabled' : '' %>"><a href="/search?search=<%= query %>&page=<%= currentPage+1 %>">Next</a></li>
+                        </ul>
+                    <% } %>
+                </ul>
             </div>
-        </section>
-        <%})} %>
-        <div class="text-align-center">
-            <ul class="pagination pagination-sm">
-                <% if(totalPages > 0) { %>
-                    <ul class="pagination pagination-sm">
-                        <li class="<%= currentPage <= 1 ? 'disabled' : '' %>"><a href="/search?search=<%= query %>&page=<%= currentPage - 1 %>">Prev</a></li>
-                        <% for(let i = 0; i < totalPages; i++) { %>
-                            <li class="<%= currentPage == i ? 'active' : '' %>"><a href="/search?search=<%= query %>&page=<%= i %>"><%= i %></a></li>
-                        <% } %>
-                        <li class="<%= currentPage >= totalPages ? 'disabled' : '' %>"><a href="/search?search=<%= query %>&page=<%= currentPage+1 %>">Next</a></li>
-                    </ul>
-                <% } %>
-            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="right_content">
+            <aside class="single_sidebar">
+                <h2><span>Results Filtering</span></h2>
+                <p class="text-muted fs-mini">Listed content is categorized by the following groups:</p>
+                <ul>
+                    <li class="cat-item"><a href="/search?search=<%= query %>&page=<%= currentPage %>&filter=catetory">Category</a></li>
+                    <li class="cat-item"><a href="/search?search=<%= query %>&page=<%= currentPage %>&filter=createAt">New News</a></li>
+                </ul> 
+            </aside>
+            <%- include('../partials/single_sidebar.ejs') %>
         </div>
     </div>
 </div>

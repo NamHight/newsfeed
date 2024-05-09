@@ -6,6 +6,10 @@ class SearchController {
         const query = req.query.search;
         const filter = req.query.filter;
         const username = req.session.username;
+        let mostViews = await News.mostviews();
+        let id = req.query.page
+        let findResult =  await News.Posts(id)
+        let latestNew = await News.latestNews();
         const page = parseInt(req.query.page) || 0;
         const perPage = 10;
         let result = await News.search({title:query, description:query},page,perPage);
@@ -24,7 +28,10 @@ class SearchController {
             dated: convertDate,
             query:query,
             errors:'',
-            loginName:username
+            loginName:username,
+            mostViews:mostViews,
+            latestNew:latestNew,
+            findResult:findResult
         });
     }
 }

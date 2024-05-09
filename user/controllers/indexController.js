@@ -1,4 +1,5 @@
 
+'use client'
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
@@ -6,6 +7,7 @@ const User = require('../models/Users.js');
 const News = require('../models/News.js');
 const session = require('express-session');
 const multer = require('multer');
+const { htmlToText } = require('html-to-text');
 //upload Img
 const storage = multer.diskStorage({//diskStorage hàm lưu trữ 
     destination:(req, file, res) => {//destination nơi lưu file
@@ -22,13 +24,13 @@ class IndexController {
 
     async index(req, res) {
         try {
-            //biến truyền vào
-            let thethao = 'thethao'
-            let thoitiet = 'thoitiet'
-            let thucPham = 'thucPham'
-            let nhac = 'nhac'
-            let phimanh = 'phimanh'
-            let dienvien = 'dienvien'
+            //biến truyền vào   
+            let thethao = 'Sport'
+            let thoitiet = 'Weather'
+            let thucPham = 'Food'
+            let nhac = 'Music'
+            let phimanh = 'Movie'
+            let dienvien = 'Actor'
 
             //biến được truyền vào ham
             //thethao
@@ -156,6 +158,15 @@ class IndexController {
 
     getSignup (req,res){
         res.render('pages/signup', { title:'Signup',errors:'' });
+    }
+    async getSingle_page (req,res){
+        //let relatedPost = await News.search({title:query, description:query},page,perPage);
+        let mostViews = await News.mostviews();
+        let latestNew = await News.latestNews();
+        let id = req.query.page;
+        let findResult =  await News.Posts(id)
+        let loginName = req.session.username || '';
+        res.render('pages/detailPosts', { title:'detailPosts',errors:'',loginName:loginName, latestNew:latestNew, mostViews:mostViews,findResult:findResult});
     }
     logout (req,res){
         req.session.destroy((err) => { //destroy huỷ bỏ session

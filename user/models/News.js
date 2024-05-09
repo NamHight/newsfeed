@@ -85,38 +85,67 @@ class News{
 
     }
 
-    latestNews = async () => {
+    latestNews = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
-        let result = await query(sql)
-        console.log(result);
-        return result;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params);
+        sql += ` WHERE ${columnSet}`;
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
     }
 
-    latestPost = async () => {
+    latestPost = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by createAt desc LIMIT 5`;
-        let result = await query(sql)
-        console.log(result);
-        return result;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params);
+        sql += ` WHERE ${columnSet}`;
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
     }
 
-    postNews = async () => {
+    postNews = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by view desc Limit 3`;
-        console.log(await query(sql))
-        return await query(sql);
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
     }
 
-    mostviews = async () => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by view desc Limit 5`;
-        console.log(await query(sql))
-        return await query(sql);
+    mostviews = async (params = {}) => {
+        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost = ${this.tableName}.Id order by view desc Limit 5`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
     }
+
+    Posts = async (params) => {
+        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
+        inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
+        sql += ` WHERE ${this.tableName}.Id = ${params} `;
+        console.log("Posts: " + await query(sql));
+        return await query(sql);
+    } 
 
     dmBaiViet = async (params) => {
         let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
         inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
         sql += ` WHERE name = '${params}' order by view desc Limit 4`;
-        console.log("sqldmBaiViet: " + await query(sql));
-        return await query(sql);
+        let result =  await query(sql);
+        console.log("sqldmBaiViet: " + result);
+        return result;
     } 
 
     dmMostViews = async (params) => {
@@ -126,11 +155,17 @@ class News{
         console.log("sqldmMostViews: " + await query(sql));
         return await query(sql);
     } 
-    Photography = async () => {
+    Photography = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableImage} inner join ${this.tableName}
         on ${this.tableImage}.Idpost= ${this.tableName}.Id limit 6`;
-        console.log("sqlPhotography: " + await query(sql));
-        return await query(sql);
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
     } 
     //data la doi tuong can truyen tham so mapping qua database
     create = async (data ) => {
