@@ -23,6 +23,7 @@ class Contact{
         }
         const { columnSet, values } = multipleColumnSet(params); // {id : 1}
         sql += ` WHERE ${columnSet}`;
+        console.log(sql)
         // select * from table where id = 1
         console.log("sql: " + [columnSet] + [values]);
         return await query(sql, [...values]);

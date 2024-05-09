@@ -17,6 +17,18 @@
         <link href="assets/libs/datatables/buttons.bootstrap4.css" rel="stylesheet" type="text/css">
         <link href="assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
         <link href="assets/libs/datatables/select.bootstrap4.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+         <!-- nhúng ckeditor vào trang layout cha -->
+        <style>
+ 
+         .description {  
+            display: inline-block;
+            white-space: nowrap;
+            width: 300px;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
+            } 
+        </style>
     </head>
 
     <body>
@@ -25,6 +37,14 @@
             <%- include('partials/leftSide.ejs'); %>
             <div class="content-page">
                 <%- body %>
+                <script>
+                    // khởi tạo ckeditor và nhúng vào phần tử trong trang 
+                    ClassicEditor
+                        .create( document.querySelector( '#editor' ) )
+                        .catch( error => {
+                            console.error( error );
+                        } );
+                </script>
             </div>
         </div>
         <div class="right-bar">

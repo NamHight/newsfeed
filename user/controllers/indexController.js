@@ -4,6 +4,7 @@ const moment = require("moment")
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
+<<<<<<< HEAD
 const User = require('../models/Users.js');
 const News = require('../models/News.js');
 const session = require('express-session');
@@ -19,6 +20,9 @@ const storage = multer.diskStorage({//diskStorage hàm lưu trữ
     }
 })
 const upload = multer({ storage: storage })
+=======
+const indexModel = require('../models/index.js')
+>>>>>>> origin
 
 class IndexController {
     // hallder callback 
@@ -102,6 +106,7 @@ class IndexController {
             console.log("error",e);
         }
     }
+<<<<<<< HEAD
     Login = async (req,res) =>{
         let user = req.body.username
         let pass = req.body.password
@@ -199,6 +204,15 @@ class IndexController {
             console.log(err);
             res.status(500).send('Server Error');
         }
+=======
+
+    createNewsLetter = async(req, res)=>{
+        let mail = req.body.email
+        console.log("mail đã nhận" , req.body) 
+        console.log("đã vào được thêm newsletter")
+        var result = indexModel.create({Mail:mail})
+        res.redirect('/')
+>>>>>>> origin
     }
 }
 

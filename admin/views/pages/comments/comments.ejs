@@ -1,0 +1,40 @@
+
+
+<div class="text-center rounded text-info h5" style="margin-bottom: 20px;"> 
+    <marquee behavior="scroll" direction="left">
+        <%=title %>
+    </marquee>
+</div>
+<div class="container d-flex justify-content-between">
+    <a href="/comments" class="btn btn-warning active" aria-current="page">Home Comments</a>
+</div>
+
+<div class="mt-3 container">
+    <table id="datatable" class="table table-bordered dt-responsive nowrap table-sm"
+                                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <thead class="thead-info">
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>ID_Post</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach( (element )=> { %>
+                <tr>
+                    <td><%=element.Id%></td>
+                    <td><%=element.Content%></td>
+                    <td><%=element.IdPost%></td>
+                    <%if(element.Status ==1) {%>
+                        <td><a href="activeComment?id=<%=element.Id%>">Active</a></td>
+                    <%} else {%>
+                        <td><a href="activeComment?id=<%=element.Id%>">No Active</a></td>
+                    <%}%>
+                </tr>
+            <% });  %>
+        </tbody>
+    </table>
+</div>
+
+
