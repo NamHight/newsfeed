@@ -4,9 +4,9 @@
             <ul class="spost_nav">
                 <% mostViews.forEach(item => { %>
                     <li>
-                        <div class="media wow fadeInDown"> <a href="/detailPosts?page=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
-                            <div class="media-body"> <a href="/detailPosts?page=<%=item.Id%>" class="catg_title"> <h4><%= item.title %></h4></a> 
-                                <p>View: <%= item.view %></p>
+                        <div class="media wow fadeInDown"> <a href="/news?id=<%=item.Id%>" class="media-left"> <img alt="" src="images/<%= item.FileName %>" style="object-fit: cover;"> </a>
+                            <div class="media-body" width="100px"> <a href="/news?id=<%=item.Id%>" class="catg_title"> <h4><%= item.title %></h4></a> 
+                                <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i></p>
                             </div>
                         </div>
                     </li>
@@ -39,26 +39,13 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="comments">
                     <ul class="spost_nav">
+                        <% comments.forEach(item => {%>
                         <li>
-                            <div class="media wow fadeInDown"> <a href="/detailPosts" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                                <div class="media-body"> <a href="/detailPosts" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                            <div class="media wow fadeInDown"><img alt="" src="images/Anh.png" class="media-left">
+                                <div class="media-body" style="display: block;"><%= item.Content %></div>
                             </div>
                         </li>
-                        <li>
-                            <div class="media wow fadeInDown"> <a href="/detailPosts" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                                <div class="media-body"> <a href="/detailPosts" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="media wow fadeInDown"> <a href="/detailPosts" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                                <div class="media-body"> <a href="/detailPosts" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="media wow fadeInDown"> <a href="/detailPosts" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                                <div class="media-body"> <a href="/detailPosts" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                            </div>
-                        </li>
+                        <% }) %>
                     </ul>
                 </div>
             </div>

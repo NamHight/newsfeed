@@ -1,5 +1,6 @@
 
 'use client'
+const moment = require("moment")
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
@@ -32,39 +33,40 @@ class IndexController {
             let phimanh = 'Movie'
             let dienvien = 'Actor'
 
-            //biến được truyền vào ham
-            //thethao
-            let sports = await News.dmBaiViet(thethao);
-            let sportMostViews = await News.dmMostViews(thethao);
-            //thoitiet
-            let weather = await News.dmBaiViet(thoitiet);
-            let weatherMostViews = await News.dmMostViews(thoitiet);
-            //thucPham
-            let food = await News.dmBaiViet(thucPham);
-            let foodsMostViews = await News.dmMostViews(thucPham);
-            //nhac
-            let music = await News.dmBaiViet(nhac);
-            let musicMostViews = await News.dmMostViews(nhac);
-            //phimanh
-            let movie = await News.dmBaiViet(phimanh);
-            let movieMostViews = await News.dmMostViews(phimanh);
-            //dienvien
-            let actor = await News.dmBaiViet(dienvien);
-            let actorMostViews = await News.dmMostViews(dienvien);
+           const [sports,
+            sportMostViews,weather,weatherMostViews,food,foodsMostViews,music,musicMostViews,movie,movieMostViews,actor,actorMostViews,
+            comments,Photography,mostViews,latestPost,latestNew,postNews] = await Promise.all([
+                News.dmBaiViet(thethao),
+                News.dmMostViews(thethao),
+                News.dmBaiViet(thoitiet),
+                News.dmMostViews(thoitiet),
+                News.dmBaiViet(thucPham),
+                News.dmMostViews(thucPham),
+                News.dmBaiViet(nhac),
+                News.dmMostViews(nhac),
+                News.dmBaiViet(phimanh),
+                News.dmMostViews(phimanh),
+                News.dmBaiViet(dienvien),
+                News.dmMostViews(dienvien),
+                News.comments(),
+                News.Photography(),
+                News.mostviews(),
+                News.latestPost(),
+                News.latestNews(),
+                News.postNews()
+           ]);
 
-            let Photography =  await News.Photography();
-            let mostViews = await News.mostviews();
-            let latestPost = await News.latestPost();
-            let latestNew = await News.latestNews();
-            let postNews =  await News.postNews()
             let loginName = req.session.username || '';
             let img = req.session.Image;
-
+            console.log("show mis",sportMostViews);
             res.render('pages/index', { title: 'News Feeds', errors: '',
             loginName: loginName, img: img, latestNew:latestNew, latestPost:latestPost, mostViews:mostViews,
-            sports:sports, sportMostViews:sportMostViews, postNews:postNews, weather:weather, weatherMostViews:weatherMostViews,
+            sports:sports, sportMostViews:sportMostViews, postNews:postNews, weather:weather, 
+            weatherMostViews:weatherMostViews,
             food:food, foodsMostViews:foodsMostViews, music: music, musicMostViews:musicMostViews,
-            movie:movie, movieMostViews:movieMostViews, actor:actor, actorMostViews:actorMostViews, Photography:Photography
+            movie:movie, movieMostViews:movieMostViews, actor:actor, actorMostViews:actorMostViews, 
+            Photography:Photography,
+            moment:moment, comments:comments
             });
         } catch (error) {
             console.error('Error:', error);
@@ -160,13 +162,14 @@ class IndexController {
         res.render('pages/signup', { title:'Signup',errors:'' });
     }
     async getSingle_page (req,res){
-        //let relatedPost = await News.search({title:query, description:query},page,perPage);
-        let mostViews = await News.mostviews();
-        let latestNew = await News.latestNews();
-        let id = req.query.page;
-        let findResult =  await News.Posts(id)
+        let id = req.query.id;
+        const [mostViews, latestNew, news, relatedPost,comments] = await Promise.all([
+            News.mostviews(),News.latestNews(), News.Posts({Id:id}), News.RelatedPost({Id:id}),News.comments()
+        ]);
+        console.log('show nw',news)
         let loginName = req.session.username || '';
-        res.render('pages/detailPosts', { title:'detailPosts',errors:'',loginName:loginName, latestNew:latestNew, mostViews:mostViews,findResult:findResult});
+        res.render('pages/news', { title:news.title,errors:'', loginName:loginName, latestNew:latestNew, 
+        mostViews:mostViews, news:news, moment:moment, relatedPost:relatedPost, comments,comments});
     }
     logout (req,res){
         req.session.destroy((err) => { //destroy huỷ bỏ session
@@ -177,6 +180,25 @@ class IndexController {
                 res.redirect('/');
             }
         });
+    }
+    commentPosts = async (req, res)=> {
+        try{
+            const {email} = req.body
+            let result = await User.createUser({email})
+            let id = req.query.page;
+            console.log("result: ",result)
+            if(result){
+                req.session.email = email
+                res.redirect(`http://localhost:8099/detailPosts?page=${id}`)
+            }
+            else 
+                res.render('http://localhost:8099/signup')
+            
+        }
+        catch (err){
+            console.log(err);
+            res.status(500).send('Server Error');
+        }
     }
 }
 

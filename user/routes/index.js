@@ -9,9 +9,10 @@ router.post('/contactModal',IndexController.performCreateModal)
 router.get('/login',IndexController.getLogin);
 router.get('/signup',IndexController.getSignup);
 router.get('/logout',IndexController.logout);
-router.get('/detailPosts',IndexController.getSingle_page);
+router.get('/news',IndexController.getSingle_page);
 
 router.post('/login',IndexController.Login);
 router.post('/signup',IndexController.Signup);
+router.post('/commemt-posts',IndexController.commentPosts);
 
 module.exports = router;

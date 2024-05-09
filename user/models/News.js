@@ -6,6 +6,7 @@ class News{
     tableName = 'baiviet';
     tableJoin = 'dmbaiviet';
     tableImage = 'imagepost';
+    tableComment = 'comment';
 
     find = async (params = {}) => {
         let sql = `SELECT * FROM ${this.tableName}`;
@@ -20,8 +21,8 @@ class News{
     }
 
     search = async (params = {},page,perpage) => {
-        let sql = `SELECT a.id,a.title,a.description,a.author,c.fileName,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
-                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.Idpost`;
+        let sql = `SELECT a.id,a.title,a.description,a.author,a.image ,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
+                           inner join ${this.tableJoin} b on a.catetory = b.Id `;
 
         if (!Object.keys(params).length) {
             return await query(sql);
@@ -33,8 +34,8 @@ class News{
     }
 
     searchAndFilter = async (params = {},page,perpage,sort) => {
-        let sql = `SELECT a.id,a.title,a.description,a.author,c.fileName,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
-                           inner join ${this.tableJoin} b on a.catetory = b.Id inner join ${this.tableImage} c on a.id = c.idpost `;
+        let sql = `SELECT a.id,a.title,a.description,a.author,a.image ,a.view,b.name,a.createAt,a.status FROM ${this.tableName} a 
+                           inner join ${this.tableJoin} b on a.catetory = b.Id `;
 
         if (!Object.keys(params).length) {
             return await query(sql);
@@ -86,7 +87,7 @@ class News{
     }
 
     latestNews = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
         if (!Object.keys(params).length) {
             return await query(sql);
         }
@@ -97,7 +98,7 @@ class News{
     }
 
     latestPost = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by createAt desc LIMIT 5`;
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by createAt desc LIMIT 5`;
         if (!Object.keys(params).length) {
             return await query(sql);
         }
@@ -108,7 +109,7 @@ class News{
     }
 
     postNews = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by view desc Limit 3`;
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id order by view desc Limit 3`;
         if (!Object.keys(params).length) {
             return await query(sql);
         }
@@ -120,7 +121,7 @@ class News{
     }
 
     mostviews = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost = ${this.tableName}.Id order by view desc Limit 5`;
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableName} inner join ${this.tableImage} on ${this.tableImage}.Idpost = ${this.tableName}.Id order by view desc Limit 5`;
         if (!Object.keys(params).length) {
             return await query(sql);
         }
@@ -131,16 +132,28 @@ class News{
         return await query(sql, [...values]);
     }
 
-    Posts = async (params) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
-        inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
-        sql += ` WHERE ${this.tableName}.Id = ${params} `;
-        console.log("Posts: " + await query(sql));
-        return await query(sql);
+    Posts = async (params = {}) => {
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.description,${this.tableName}.view,${this.tableName}.author,
+        ${this.tableName}.catetory,${this.tableName}.image,${this.tableName}.createAt, ${this.tableJoin}.name FROM ${this.tableName}
+        inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id`;
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${this.tableName}.${columnSet}`;
+        // select * from table where id = 
+        const result = await query(sql, [...values]);
+        console.log("Posts: " + result);
+        return result[0];
     } 
 
+    RelatedPost  = async (params = {}) => {
+        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id`;
+        const { columnSet, values } = multipleColumnSet(params);
+        sql += ` WHERE ${this.tableJoin}.Id in (select ${this.tableName}.catetory from ${this.tableName} where ${columnSet}) Limit 3`;
+        console.log("RelatedPost: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
+    }
+
     dmBaiViet = async (params) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
         inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
         sql += ` WHERE name = '${params}' order by view desc Limit 4`;
         let result =  await query(sql);
@@ -149,14 +162,13 @@ class News{
     } 
 
     dmMostViews = async (params) => {
-        let sql = `SELECT * FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id 
-        inner join ${this.tableImage} on ${this.tableImage}.Idpost= ${this.tableName}.Id`;
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableName}.image FROM ${this.tableName} inner join ${this.tableJoin} on ${this.tableName}.catetory=${this.tableJoin}.Id `;
         sql += ` WHERE name = '${params}' order by  view desc Limit 1`;
         console.log("sqldmMostViews: " + await query(sql));
         return await query(sql);
     } 
     Photography = async (params = {}) => {
-        let sql = `SELECT * FROM ${this.tableImage} inner join ${this.tableName}
+        let sql = `SELECT ${this.tableName}.Id, ${this.tableName}.title,${this.tableName}.view,${this.tableName}.author,${this.tableName}.catetory,${this.tableName}.createAt,${this.tableImage}.FileName FROM ${this.tableImage} inner join ${this.tableName}
         on ${this.tableImage}.Idpost= ${this.tableName}.Id limit 6`;
         if (!Object.keys(params).length) {
             return await query(sql);
@@ -167,6 +179,19 @@ class News{
         console.log("sql: " + [columnSet] + [values]);
         return await query(sql, [...values]);
     } 
+
+    comments = async (params = {}) => {
+        let sql = `SELECT * FROM ${this.tableComment} Limit 4;`;
+        if (!Object.keys(params).length) {
+            return await query(sql);
+        }
+        const { columnSet, values } = multipleColumnSet(params); // {id : 1}
+        sql += ` WHERE ${columnSet}`;
+        // select * from table where id = 1
+        console.log("sql: " + [columnSet] + [values]);
+        return await query(sql, [...values]);
+    } 
+
     //data la doi tuong can truyen tham so mapping qua database
     create = async (data ) => {
         // day la vi du

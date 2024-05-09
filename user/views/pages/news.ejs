@@ -10,17 +10,16 @@
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_page">
-            <% findResult.forEach(item => { %>
             <ol class="breadcrumb">
               <li><a href="/">Home</a></li>
-              <li><a href="#"><%= item.name %></a></li>
-              <li class="active"><%= item.title %></li>
+              <li style="color: aliceblue;"><%= news.name %></li>
+              <li class="active"><%= news.title %></li>
             </ol>
-              <h1><%= item.title %></h1>
-              <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i><%= item.author %></a> <span><i class="fa fa-calendar"></i><%= item.createAt %></span> <a href="#"><i class="fa fa-tags"></i><%= item.name %></a> </div>
-              <div class="single_page_content"> <img class="img-center" src="images/<%= item.FileName %>" alt="">
-                <p> <%= item.description %> <br>
-                  Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. 
+              <h1><%= news.title %></h1>
+              <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i><%= news.author %></a> <span><i class="fa fa-calendar"></i><%= moment(news.createAt).format("LLL") %></span> <a href="#"><i class="fa fa-tags"></i><%= news.name %></a> </div>
+              <div class="single_page_content"> <img class="img-center" src="images/<%= news.image %>" alt="<%= news.image %>">
+                <p style="text-align: center; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><%= news.description %></p> 
+                 <p> Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. 
                   Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. 
                   Aliquam accumsan, nulla sed feugiat vehicula, lacus justo semper libero, quis porttitor turpis odio sit amet ligula. 
                   Duis dapibus fermentum orci, nec malesuada libero vehicula ut. Integer sodales, urna eget interdum eleifend, nulla nibh laoreet nisl,
@@ -28,7 +27,14 @@
                     Nullam molestie gravida lobortis. Proin ut nibh quis felis auctor ornare. Cras ultricies, nibh at mollis faucibus, justo eros porttitor mi,
                      quis auctor lectus arcu sit amet nunc. Vivamus gravida vehicula arcu, vitae vulputate augue lacinia faucibus.</p>
                 <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>
-            <% }) %>
+                <p>
+                  Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. 
+                  Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. 
+                  Aliquam accumsan, nulla sed feugiat vehicula, lacus justo semper libero, quis porttitor turpis odio sit amet ligula. 
+                  Duis dapibus fermentum orci, nec malesuada libero vehicula ut. Integer sodales, urna eget interdum eleifend, nulla nibh laoreet nisl,
+                   quis dignissim mauris dolor eget mi. Donec at mauris enim. Duis nisi tellus, adipiscing a convallis quis, tristique vitae risus.
+                    Nullam molestie gravida lobortis. Proin ut nibh quis felis auctor ornare. Cras ultricies, nibh at mollis faucibus, justo eros porttitor mi,
+                     quis auctor lectus arcu sit amet nunc. Vivamus gravida vehicula arcu, vitae vulputate augue lacinia faucibus.</p>
                 <ul>
                   <li>Nullam vitae nibh odio, non scelerisque nibh</li>
                 <li>Nullam vitae nibh odio, non scelerisque nibh</li>
@@ -61,24 +67,27 @@
                 <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
               </ul>
             </div>
+            <div class="comment-posts">
+              <form action="/commemt-posts" method="post">
+                <div class="mb-3">
+                  <label for="email" class="form-label label-email">Bình Luận</label>
+                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Address...">
+                </div>
+                <button type="submit" class="btn btn-primary submit-comment">Submit</button>
+              </form>
+            </div>
             <div class="related_post">
               <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
               <ul class="spost_nav wow fadeInDown animated">
+                <% relatedPost.forEach(item => { %>
                 <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
+                  <div class="media"> <a class="media-left" href="/news?id=<%=item.Id%>"> <img src="images/<%= item.image %>" alt="<%= item.image %>"> </a>
+                    <div class="media-body"> <a class="catg_title" href="/news?id=<%=item.Id%>"> <%= item.title %> </h4></a> 
+                      <p><%= item.view %> <i class="fa fa-user" style="color: rgb(173, 173, 173);"></i> - <%= moment(item.createAt).format("LLL") %></p>
+                    </div>
                   </div>
                 </li>
-                <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img2.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
-                  </div>
-                </li>
+                <% }) %>
               </ul>
             </div>
           </div>
@@ -94,9 +103,11 @@
           <img src="../images/post_img1.jpg" alt=""/> </div>
         </a> </nav>
       <div class="col-lg-4 col-md-4 col-sm-4">
-        <%- include('../partials/single_sidebar.ejs') %>
+        <div class="right_content">
+          <%- include('../partials/single_sidebar.ejs') %>
+        </div>
       </div>
-    </div>
+    </div>  
   </section>
   
   <%- include('../partials/footer.ejs') %>

@@ -4,7 +4,7 @@
             <div class="latest_newsarea"> <span>Latest News</span>
                 <ul id="ticker01" class="news_sticker">
                     <% latestNew.forEach(item => { %>
-                        <li><a href="/detailPosts?page=<%=item.Id%>"><img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""><%= item.title %></a></li>
+                        <li><a href="/news?id=<%=item.Id%>"><img src="images/<%= item.FileName %>" style="object-fit: cover;" alt=""><%= item.title %></a></li>
                     <% }) %>
                 </ul>
                 <div class="social_area">
