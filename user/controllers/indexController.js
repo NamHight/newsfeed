@@ -4,7 +4,6 @@ const moment = require("moment")
 const IndexModel = require('../models/index.js');
 const {validationResult} = require("express-validator");
 const Contact = require("../models/Contacts");
-<<<<<<< HEAD
 const User = require('../models/Users.js');
 const News = require('../models/News.js');
 const session = require('express-session');
@@ -20,9 +19,6 @@ const storage = multer.diskStorage({//diskStorage hàm lưu trữ
     }
 })
 const upload = multer({ storage: storage })
-=======
-const indexModel = require('../models/index.js')
->>>>>>> origin
 
 class IndexController {
     // hallder callback 
