@@ -7,6 +7,7 @@ class ContactController {
 
     performCreate = async (req,res) =>{
         try{
+            let loginName = req.session.username || '';
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.render('pages/contact', {
@@ -22,10 +23,11 @@ class ContactController {
                 content: req.body.content,
                 createAt: new Date()
             }
+            
             const result = await Contact.create(data);
             if(result > 0){
                 res.locals.successMessage = 'Gửi thành công!';
-                res.render('pages/contact', { title: 'Contact', errors: '' });
+                res.render('pages/contact', { title: 'Contact', errors: '' ,loginName:loginName,successMessage:successMessage});
             }else{
                 res.redirect('/contact');
             }
